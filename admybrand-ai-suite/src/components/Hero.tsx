@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import Button from "./Button";
 
 export interface HeroProps {
@@ -15,13 +16,19 @@ export interface HeroProps {
 
 export default function Hero({ title, subtitle, cta, demoSrc }: HeroProps) {
   return (
-    <section className="text-center py-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white">
-      <h1 className="text-4xl font-bold mb-4">{title}</h1>
-      {subtitle && <p className="text-xl mb-8 max-w-2xl mx-auto">{subtitle}</p>}
-      {demoSrc && (
-        <div className="mb-8 flex justify-center">
-          {demoSrc.endsWith(".json") ? (
-            <>
+    <motion.section
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="relative text-center py-20 bg-gradient-to-r from-blue-500 to-indigo-600 text-white overflow-hidden"
+    >
+      <div className="relative z-10 inline-block bg-white/30 backdrop-blur-md p-8 rounded-xl">
+        <h1 className="mb-4">{title}</h1>
+        {subtitle && <p className="text-xl mb-8 max-w-2xl mx-auto">{subtitle}</p>}
+        {demoSrc && (
+          <div className="mb-8 flex justify-center">
+            {demoSrc.endsWith(".json") ? (
+              <>
               <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" async />
               {React.createElement(
                 "lottie-player",
@@ -46,12 +53,13 @@ export default function Hero({ title, subtitle, cta, demoSrc }: HeroProps) {
             />
           )}
         </div>
-      )}
-      {cta && (
-        <Button onClick={cta.onClick} className="text-lg px-6 py-3">
-          {cta.label}
-        </Button>
-      )}
-    </section>
+        )}
+        {cta && (
+          <Button onClick={cta.onClick} className="text-lg px-6 py-3">
+            {cta.label}
+          </Button>
+        )}
+      </div>
+    </motion.section>
   );
 }
