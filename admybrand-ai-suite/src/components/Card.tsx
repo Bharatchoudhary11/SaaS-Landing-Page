@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 export type CardProps = React.HTMLAttributes<HTMLDivElement>;
