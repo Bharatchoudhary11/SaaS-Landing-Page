@@ -1,9 +1,11 @@
 "use client";
 import { Hero, FeatureCard, PricingCard, TestimonialCarousel, FAQItem } from "@/components";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
-  const [users, setUsers] = useState(1);
+  // number of contacts for pricing calculator
+  const [contacts, setContacts] = useState(1000);
   const features = [
     { title: "Fast Performance", description: "Optimized for speed and efficiency.", icon: "⚡" },
     { title: "Cloud Sync", description: "Access your data anywhere.", icon: "☁️" },
@@ -16,9 +18,21 @@ export default function Home() {
   ];
 
   const tiers = [
-    { plan: "Basic", price: `$${users * 10}/mo`, features: ["1 project", "Email support"] },
-    { plan: "Pro", price: `$${users * 20}/mo`, features: ["5 projects", "Priority support", "Analytics"] },
-    { plan: "Enterprise", price: `$${users * 40}/mo`, features: ["Unlimited projects", "Dedicated manager", "Advanced analytics"] },
+    {
+      plan: "Basic",
+      price: `$${(contacts * 0.01).toFixed(2)}/mo`,
+      features: ["1 project", "Email support"],
+    },
+    {
+      plan: "Pro",
+      price: `$${(contacts * 0.02).toFixed(2)}/mo`,
+      features: ["5 projects", "Priority support", "Analytics"],
+    },
+    {
+      plan: "Enterprise",
+      price: `$${(contacts * 0.04).toFixed(2)}/mo`,
+      features: ["Unlimited projects", "Dedicated manager", "Advanced analytics"],
+    },
   ];
 
   const tierFeatures = ["Projects", "Support", "Analytics"];
@@ -29,6 +43,7 @@ export default function Home() {
         title="Welcome to Our SaaS"
         subtitle="All the tools you need to grow your business"
         cta={{ label: "Get Started", onClick: () => alert("Started") }}
+        demoSrc="/demo.json"
       />
 
       <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
@@ -38,16 +53,16 @@ export default function Home() {
       </section>
 
       <section className="text-center max-w-5xl mx-auto px-4 space-y-8">
-        <div>
-          <label className="font-medium mr-2">Users:</label>
+        <div className="space-y-2">
+          <label className="font-medium mr-2">Contacts: {contacts}</label>
           <input
-            type="number"
-            min={1}
-            value={users}
-            onChange={(e) =>
-              setUsers(Math.max(1, parseInt(e.target.value) || 1))
-            }
-            className="border rounded px-2 w-20"
+            type="range"
+            min={100}
+            max={10000}
+            step={100}
+            value={contacts}
+            onChange={(e) => setContacts(parseInt(e.target.value))}
+            className="w-full"
           />
         </div>
         <div className="grid md:grid-cols-3 gap-8">
@@ -96,6 +111,7 @@ export default function Home() {
         <div className="space-x-4">
           <a href="https://twitter.com" className="hover:underline">Twitter</a>
           <a href="https://facebook.com" className="hover:underline">Facebook</a>
+          <Link href="/blog" className="hover:underline">Blog</Link>
           <a href="mailto:contact@example.com" className="hover:underline">Contact Us</a>
         </div>
         <div className="space-x-4 text-sm text-gray-600">
