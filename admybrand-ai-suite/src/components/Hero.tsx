@@ -2,7 +2,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Button from "./Button";
-import LottiePlayer from "./LottiePlayer";
+import dynamic from "next/dynamic";
+
+// Dynamically load the Lottie player on the client only to
+// avoid hydration mismatches with the custom element.
+const LottiePlayer = dynamic(() => import("./LottiePlayer"), { ssr: false });
 
 export interface HeroProps {
   title: string;
