@@ -6,3 +6,4 @@ export { default as FeatureCard } from "./FeatureCard";
 export { default as PricingCard } from "./PricingCard";
 export { default as TestimonialCarousel } from "./TestimonialCarousel";
 export { default as FAQItem } from "./FAQItem";
+export { default as LottiePlayer } from "./LottiePlayer";

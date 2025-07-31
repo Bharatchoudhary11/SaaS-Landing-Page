@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Button from "./Button";
+import LottiePlayer from "./LottiePlayer";
 
 export interface HeroProps {
   title: string;
@@ -29,31 +30,21 @@ export default function Hero({ title, subtitle, cta, demoSrc }: HeroProps) {
         {demoSrc && (
           <div className="mb-8 flex justify-center">
             {demoSrc.endsWith(".json") ? (
-              <>
-              <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" async />
-              {React.createElement(
-                "lottie-player",
-                {
-                  src: demoSrc,
-                  background: "transparent",
-                  speed: "1",
-                  loop: true,
-                  autoplay: true,
-                  style: { width: "300px", height: "300px" },
-                } as any // eslint-disable-line @typescript-eslint/no-explicit-any
-              )}
-            </>
-          ) : (
-            <video
-              src={demoSrc}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full max-w-md rounded-lg"
-            />
-          )}
-        </div>
+              <LottiePlayer
+                src={demoSrc}
+                style={{ width: "300px", height: "300px" }}
+              />
+            ) : (
+              <video
+                src={demoSrc}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full max-w-md rounded-lg"
+              />
+            )}
+          </div>
         )}
         {cta && (
           <Button onClick={cta.onClick} className="text-lg px-6 py-3">
