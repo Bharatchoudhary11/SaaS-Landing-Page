@@ -1,102 +1,105 @@
-import Image from "next/image";
+"use client";
+import { Hero, FeatureCard, PricingCard, TestimonialCarousel, FAQItem } from "@/components";
+import { useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [users, setUsers] = useState(1);
+  const features = [
+    { title: "Fast Performance", description: "Optimized for speed and efficiency.", icon: "⚡" },
+    { title: "Cloud Sync", description: "Access your data anywhere.", icon: "☁️" },
+    { title: "Secure", description: "Top-notch security features.", icon: "🔒" },
+  ];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const testimonials = [
+    { quote: "This product changed the way we work.", author: "Jane Doe" },
+    { quote: "Fantastic experience and support!", author: "John Smith" },
+  ];
+
+  const tiers = [
+    { plan: "Basic", price: `$${users * 10}/mo`, features: ["1 project", "Email support"] },
+    { plan: "Pro", price: `$${users * 20}/mo`, features: ["5 projects", "Priority support", "Analytics"] },
+    { plan: "Enterprise", price: `$${users * 40}/mo`, features: ["Unlimited projects", "Dedicated manager", "Advanced analytics"] },
+  ];
+
+  const tierFeatures = ["Projects", "Support", "Analytics"];
+
+  return (
+    <div className="space-y-20">
+      <Hero
+        title="Welcome to Our SaaS"
+        subtitle="All the tools you need to grow your business"
+        cta={{ label: "Get Started", onClick: () => alert("Started") }}
+      />
+
+      <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto px-4">
+        {features.map((f) => (
+          <FeatureCard key={f.title} {...f} />
+        ))}
+      </section>
+
+      <section className="text-center max-w-5xl mx-auto px-4 space-y-8">
+        <div>
+          <label className="font-medium mr-2">Users:</label>
+          <input
+            type="number"
+            min={1}
+            value={users}
+            onChange={(e) => setUsers(parseInt(e.target.value))}
+            className="border rounded px-2 w-20"
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+        <div className="grid md:grid-cols-3 gap-8">
+          {tiers.map((t) => (
+            <PricingCard key={t.plan} {...t} />
+          ))}
+        </div>
+
+        <table className="w-full text-left border-t">
+          <thead>
+            <tr>
+              <th className="py-2">Feature</th>
+              {tiers.map((t) => (
+                <th key={t.plan} className="py-2 text-center">
+                  {t.plan}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {tierFeatures.map((f) => (
+              <tr key={f} className="border-t">
+                <td className="py-2">{f}</td>
+                {tiers.map((t) => (
+                  <td key={t.plan} className="py-2 text-center">
+                    {t.features.some((ft) => ft.toLowerCase().includes(f.toLowerCase())) ? "✓" : "-"}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+      <section className="max-w-xl mx-auto px-4">
+        <TestimonialCarousel testimonials={testimonials} />
+      </section>
+
+      <section className="max-w-2xl mx-auto px-4 space-y-4">
+        <FAQItem question="What is your refund policy?" answer="We offer a 30-day money-back guarantee." />
+        <FAQItem question="Can I upgrade later?" answer="Yes, you can upgrade at any time." />
+        <FAQItem question="Do you offer support?" answer="Absolutely, email and chat support are included." />
+      </section>
+
+      <footer className="bg-gray-100 py-8 text-center space-y-2">
+        <div className="space-x-4">
+          <a href="https://twitter.com" className="hover:underline">Twitter</a>
+          <a href="https://facebook.com" className="hover:underline">Facebook</a>
+          <a href="mailto:contact@example.com" className="hover:underline">Contact Us</a>
+        </div>
+        <div className="space-x-4 text-sm text-gray-600">
+          <a href="#" className="hover:underline">Privacy Policy</a>
+          <a href="#" className="hover:underline">Terms of Service</a>
+        </div>
       </footer>
     </div>
   );
