@@ -3,3 +3,4 @@ declare namespace JSX {
     'lottie-player': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
   }
 }
+export {};
