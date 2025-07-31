@@ -44,7 +44,9 @@ export default function Home() {
             type="number"
             min={1}
             value={users}
-            onChange={(e) => setUsers(parseInt(e.target.value))}
+            onChange={(e) =>
+              setUsers(Math.max(1, parseInt(e.target.value) || 1))
+            }
             className="border rounded px-2 w-20"
           />
         </div>
