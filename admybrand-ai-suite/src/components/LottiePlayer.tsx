@@ -10,11 +10,16 @@ export default function LottiePlayer({ src, style }: LottiePlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src =
+    const scriptSrc =
       "https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js";
-    script.async = true;
-    document.body.appendChild(script);
+    let script = document.querySelector<HTMLScriptElement>(`script[src="${scriptSrc}"]`);
+
+    if (!script) {
+      script = document.createElement("script");
+      script.src = scriptSrc;
+      script.async = true;
+      document.body.appendChild(script);
+    }
 
     const player = document.createElement("lottie-player");
     player.setAttribute("src", src);
@@ -27,7 +32,6 @@ export default function LottiePlayer({ src, style }: LottiePlayerProps) {
 
     return () => {
       player.remove();
-      document.body.removeChild(script);
     };
   }, [src, style]);
 
